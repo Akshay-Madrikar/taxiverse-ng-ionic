@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Discover vehicles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ loadedVehicles[0].name }}</ion-card-title>
+            <ion-card-subtitle
+              >&#8377;{{ loadedVehicles[0].price }} / km</ion-card-subtitle
+            >
+          </ion-card-header>
+          <ion-img [src]="loadedVehicles[0].imageUrl"></ion-img>
+          <ion-card-content>
+            <ion-label>Type of engine: </ion-label>
+            <p>{{ loadedVehicles[0].fuelType }}</p>
+          </ion-card-content>
+          <div class="ion-padding ion-text-right">
+            <ion-button
+              class="ion-text-right"
+              fill="clear"
+              color="primary"
+              [routerLink]="['/','vehicles','tabs', 'discover', loadedVehicles[0].id]"
+              >More</ion-button
+            >
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-list>
+          <ion-item
+            *ngFor="let vehicle of loadedVehicles.slice(1)"
+            [routerLink]="['/','vehicles','tabs', 'discover', vehicle.id]"
+            detail
+          >
+            <ion-thumbnail slot="start">
+              <ion-img [src]="vehicle.imageUrl"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{ vehicle.name }}</h2>
+              <p>Type of engine: {{ vehicle.fuelType }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
