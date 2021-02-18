@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Vehicle } from '../vehicle.model';
 import { VehiclesService } from '../vehicles.service';
+import { SegmentChangeEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-discover',
@@ -14,5 +15,9 @@ export class DiscoverPage implements OnInit {
 
   ngOnInit() {
     this.loadedVehicles = this.vehiclesService.vehicles;
+  }
+
+  onFilterVehicle(event: CustomEvent<SegmentChangeEventDetail>) {
+    console.log(event);
   }
 }
