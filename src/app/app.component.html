@@ -5,27 +5,31 @@
         <ion-title> Taxiverse </ion-title>
       </ion-toolbar>
     </ion-header>
+
     <ion-content>
       <ion-list>
         <ion-menu-toggle>
-          <ion-item lines="none" routerLink="/vehicles/tabs/discover" button>
-            <ion-icon name="search" slot="start">
-              <ion-label>Discover vehicles</ion-label>
-            </ion-icon>
+          <ion-item lines="none" routerLink="/vehicles/tabs/discover">
+            <ion-icon name="search" slot="start"></ion-icon>
+            <ion-label>Discover vehicles</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item lines="none" routerLink="/vehicles/tabs/bookings" button>
-            <ion-icon name="car-outline" slot="start">
-              <ion-label>Your bookings</ion-label>
-            </ion-icon>
+          <ion-item lines="none" routerLink="/vehicles/tabs/bookings">
+            <ion-icon name="car-outline" slot="start"></ion-icon>
+            <ion-label>Your bookings</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink="/about">
+            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+            <ion-label>About Us</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item lines="none" (click)="onLogout()" button>
-            <ion-icon name="exit" slot="start">
-              <ion-label>Logout</ion-label>
-            </ion-icon>
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
           </ion-item>
         </ion-menu-toggle>
       </ion-list>

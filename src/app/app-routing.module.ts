@@ -24,7 +24,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./bookings/bookings.module').then((m) => m.BookingsPageModule),
     canLoad: [AuthGuard],
+  },  {
+    path: 'about',
+    loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
   },
+
 ];
 
 @NgModule({

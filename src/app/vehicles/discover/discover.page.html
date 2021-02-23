@@ -46,6 +46,7 @@
             *ngFor="let vehicle of loadedVehicles.slice(1)"
             [routerLink]="['/','vehicles','tabs', 'discover', vehicle.id]"
             detail
+            lines="none"
           >
             <ion-thumbnail slot="start">
               <ion-img [src]="vehicle.imageUrl"></ion-img>

@@ -5,6 +5,9 @@ export class Vehicle {
     public imageUrl: string,
     public fuelType: string,
     public price: number,
-    public fuelChecklist: string[]
+    public fuelChecklist: string[],
+    public availableFrom?: Date,
+    public availableTo?: Date,
+    public bookable?: number
   ) {}
 }

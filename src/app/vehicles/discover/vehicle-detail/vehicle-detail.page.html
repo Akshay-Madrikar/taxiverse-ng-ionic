@@ -3,12 +3,43 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/vehicles/tabs/discover"></ion-back-button>
     </ion-buttons>
-    <ion-title>Vehicle Detail</ion-title>
+    <ion-title>{{ vehicle.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button color="primary" class="ion-margin" (click)="onBookVehicle()"
-    >Book</ion-button
-  >
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-img [src]="vehicle.imageUrl"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-left">
+        <p><b>Type of engine: </b>{{ vehicle.fuelType }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-left">
+        <p><b>Price: </b>{{ vehicle.price }} / km</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-left">
+        <p><b>Available From: </b>{{ vehicle.availableFrom }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-left">
+        <p><b>Available To: </b>{{ vehicle.availableTo }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
+        <ion-button color="primary" class="ion-margin" (click)="onBookVehicle()"
+          >Book</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
