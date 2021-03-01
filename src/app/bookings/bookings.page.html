@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/vehicles/tabs/discover"></ion-back-button>
     </ion-buttons>
     <ion-title>Your bookings</ion-title>
   </ion-toolbar>
@@ -30,8 +30,8 @@
           >
             <ion-item>
               <ion-label>
-                <h5>{{ booking.vehicleName }}</h5>
-                <p>No.of people: {{ booking.partnerCount }}</p>
+                <p>{{ booking.vehicleName }}</p>
+                <p>No.of people: {{ booking.partnersCount }}</p>
                 <p>From: {{ booking.bookedFrom }}</p>
                 <p>To: {{ booking.bookedTo }}</p>
               </ion-label>
@@ -39,7 +39,7 @@
             <ion-item-options>
               <ion-item-option
                 color="danger"
-                (click)="onCancelBooking(booking.id, slidingBooking)"
+                (click)="onCancelBooking(booking._id, slidingBooking)"
               >
                 <ion-icon
                   name="close-circle-outline"

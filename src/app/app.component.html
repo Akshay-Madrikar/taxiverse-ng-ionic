@@ -2,12 +2,13 @@
   <ion-menu side="start">
     <ion-header>
       <ion-toolbar>
-        <ion-title> Taxiverse </ion-title>
+        <ion-title *ngIf="user.role === 0"> {{ user.email }} </ion-title>
+        <ion-title *ngIf="user.role === 1">Admin</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
-      <ion-list>
+      <ion-list *ngIf="user.role === 0">
         <ion-menu-toggle>
           <ion-item lines="none" routerLink="/vehicles/tabs/discover">
             <ion-icon name="search" slot="start"></ion-icon>
@@ -24,6 +25,38 @@
           <ion-item lines="none" routerLink="/about">
             <ion-icon name="help-circle-outline" slot="start"></ion-icon>
             <ion-label>About Us</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" (click)="onLogout()" button>
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+      <ion-list *ngIf="user.role === 1">
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink="/admin/add-vehicle">
+            <ion-icon name="car-sport-outline" slot="start"></ion-icon>
+            <ion-label>Add vehicles</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink="/admin/manage-vehicles">
+            <ion-icon name="car-outline" slot="start"></ion-icon>
+            <ion-label>Manage vehicles</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink="/admin/manage-users">
+            <ion-icon name="people-circle-outline" slot="start"></ion-icon>
+            <ion-label>Manage users</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink="/admin/bookings-list">
+            <ion-icon name="folder-outline" slot="start"></ion-icon>
+            <ion-label>Bookings</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>

@@ -14,7 +14,13 @@
   </ion-segment>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+      <ion-col
+        size="12"
+        size-sm="8"
+        offset-sm="2"
+        text-center
+        *ngIf="loadedVehicles && loadedVehicles.length"
+      >
         <ion-card>
           <ion-card-header>
             <ion-card-title>{{ loadedVehicles[0].name }}</ion-card-title>
@@ -32,7 +38,7 @@
               class="ion-text-right"
               fill="clear"
               color="primary"
-              [routerLink]="['/','vehicles','tabs', 'discover', loadedVehicles[0].id]"
+              [routerLink]="['/','vehicles','tabs', 'discover', loadedVehicles[0]._id]"
               >More</ion-button
             >
           </div>
@@ -43,8 +49,8 @@
       <ion-col size="12" size-sm="8" offset-sm="2" text-center>
         <ion-list>
           <ion-item
-            *ngFor="let vehicle of loadedVehicles.slice(1)"
-            [routerLink]="['/','vehicles','tabs', 'discover', vehicle.id]"
+            *ngFor="let vehicle of loadedVehicles.slice(1); let i =  index"
+            [routerLink]="['/','vehicles','tabs', 'discover', vehicle._id]"
             detail
             lines="none"
           >

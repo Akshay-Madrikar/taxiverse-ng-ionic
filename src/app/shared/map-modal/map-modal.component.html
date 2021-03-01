@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pick location</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="map"></div>
+  <!-- geocoder search input -->
+  <div class="geocoder">
+    <div id="geocoder"></div>
+  </div>
+  <!-- left side instructions -->
+  <div id="instructions">
+    <div id="calculated-line"></div>
+  </div>
+</ion-content>

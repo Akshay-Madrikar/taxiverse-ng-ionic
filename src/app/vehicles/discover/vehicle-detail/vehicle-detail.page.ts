@@ -9,8 +9,7 @@ import {
 import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/bookings/booking.service';
 import { NewBookingComponent } from 'src/app/bookings/new-booking/new-booking.component';
-import { Vehicle } from '../../vehicle.model';
-import { VehiclesService } from '../../vehicles.service';
+import { VehicleData, VehiclesService } from '../../vehicles.service';
 
 @Component({
   selector: 'app-vehicle-detail',
@@ -18,7 +17,19 @@ import { VehiclesService } from '../../vehicles.service';
   styleUrls: ['./vehicle-detail.page.scss'],
 })
 export class VehicleDetailPage implements OnInit, OnDestroy {
-  vehicle: Vehicle;
+  vehicle: VehicleData = {
+    _id: '',
+    name: '',
+    imageUrl: '',
+    fuelType: '',
+    price: null,
+    fuelChecklist: [],
+    availableFrom: null,
+    availableTo: null,
+    updatedAt: '',
+    createdAt: '',
+    bookable: null,
+  };
   private vehicleSub: Subscription;
 
   constructor(
@@ -38,9 +49,12 @@ export class VehicleDetailPage implements OnInit, OnDestroy {
         this.navCtrl.navigateBack('/vehicles/tabs/discover');
         return;
       }
+
       this.vehicleSub = this.vehicleService
-        .getVehicle(paramMap.get('vehicleId'))
-        .subscribe((vehicle) => (this.vehicle = vehicle));
+        .getSingleVehicle(paramMap.get('vehicleId'))
+        .subscribe((vehicle: VehicleData) => {
+          this.vehicle = vehicle;
+        });
     });
   }
 
@@ -84,16 +98,9 @@ export class VehicleDetailPage implements OnInit, OnDestroy {
             .create({ message: 'Booking vehicle...' })
             .then((loadingEl) => {
               loadingEl.present();
-              const data = resultData.data.bookingData;
+              //const data = resultData.data.bookingData;
               this.bookingService
-                .addBooking(
-                  this.vehicle.id,
-                  this.vehicle.name,
-                  this.vehicle.imageUrl,
-                  data.no_of_partners,
-                  data.startDate,
-                  data.endDate
-                )
+                .addBooking(resultData.data.bookingData)
                 .subscribe(() => {
                   loadingEl.dismiss();
                   this.router.navigateByUrl('/vehicles/tabs/bookings');

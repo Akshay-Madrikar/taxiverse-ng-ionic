@@ -24,11 +24,40 @@ const routes: Routes = [
     loadChildren: () =>
       import('./bookings/bookings.module').then((m) => m.BookingsPageModule),
     canLoad: [AuthGuard],
-  },  {
-    path: 'about',
-    loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
   },
-
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('./about/about.module').then((m) => m.AboutPageModule),
+  },
+  {
+    path: 'admin/add-vehicle',
+    loadChildren: () =>
+      import('./admin/add-vehicle/add-vehicle.module').then(
+        (m) => m.AddVehiclePageModule
+      ),
+  },
+  {
+    path: 'admin/manage-vehicles',
+    loadChildren: () =>
+      import('./admin/manage-vehicles/manage-vehicles.module').then(
+        (m) => m.ManageVehiclesPageModule
+      ),
+  },
+  {
+    path: 'admin/bookings-list',
+    loadChildren: () =>
+      import('./admin/bookings-list/bookings-list.module').then(
+        (m) => m.BookingsListPageModule
+      ),
+  },
+  {
+    path: 'admin/manage-users',
+    loadChildren: () =>
+      import('./admin/manage-users/manage-users.module').then(
+        (m) => m.ManageUsersPageModule
+      ),
+  },
 ];
 
 @NgModule({

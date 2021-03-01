@@ -20,6 +20,10 @@
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
     "@ionic/angular": "^5.5.2",
+    "@mapbox/mapbox-gl-draw": "^1.2.2",
+    "@mapbox/mapbox-gl-geocoder": "^4.7.0",
+    "mapbox-gl": "^2.1.1",
+    "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

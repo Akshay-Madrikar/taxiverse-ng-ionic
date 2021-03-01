@@ -24,7 +24,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <form (ngSubmit)="onBookVehicle()" #f="ngForm">
+  <form (ngSubmit)="onBookVehicle()" [formGroup]="form">
     <ion-grid>
       <ion-row>
         <ion-col size-md="6" offset-sm="3">
@@ -32,7 +32,7 @@
             <ion-label position="floating"
               >Number of partners in ride</ion-label
             >
-            <ion-select [ngModel]="'2'" name="partner-count">
+            <ion-select [ngModel]="'2'" formControlName="partnerCount">
               <ion-select-option value="1">1</ion-select-option>
               <ion-select-option value="2">2</ion-select-option>
               <ion-select-option value="3">3</ion-select-option>
@@ -50,12 +50,10 @@
             <ion-datetime
               display-format="MMM DD, YYYY HH:mm"
               picker-format="MMM DD, YYYY HH:mm"
-              [min]="selectedVehicle.availableFrom.toISOString()"
-              [max]="selectedVehicle.availableTo.toISOString()"
-              ngModel
-              name="date-from"
-              required
-              #startCtrl="ngModel"
+              [min]="selectedVehicle.availableFrom"
+              [max]="selectedVehicle.availableTo"
+              formControlName="dateFrom"
+              #startCtrl
             >
             </ion-datetime>
           </ion-item>
@@ -69,13 +67,18 @@
               display-format="MMM DD, YYYY HH:mm"
               picker-format="MMM DD, YYYY HH:mm"
               [min]="startCtrl.value"
-              [max]="selectedVehicle.availableTo.toISOString()"
-              ngModel
-              name="date-to"
-              required
+              [max]="selectedVehicle.availableTo"
+              formControlName="dateTo"
             >
             </ion-datetime>
           </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="6" offset-sm="3">
+          <app-location-picker
+            (locationPick)="onLocationPick($event)"
+          ></app-location-picker>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -84,7 +87,7 @@
             color="primary"
             type="submit"
             expand="block"
-            [disabled]="!f.valid"
+            [disabled]="!form.valid"
             >Quick Book</ion-button
           >
         </ion-col>

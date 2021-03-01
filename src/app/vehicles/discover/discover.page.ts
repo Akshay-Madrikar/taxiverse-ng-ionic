@@ -10,20 +10,24 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit, OnDestroy {
-  loadedVehicles: Vehicle[];
+  loadedVehicles: VehicleData[] = [];
   private vehicleSub: Subscription;
 
   constructor(private vehiclesService: VehiclesService) {}
 
   ngOnInit() {
-    // this.vehiclesService.fetchVehicles().subscribe((resData) => {
-    //   this.loadedVehicles = resData;
-    //   console.log(this.loadedVehicles[0], '*************');
+    this.vehicleSub = this.vehiclesService
+      .fetchVehicles()
+      .subscribe((resData: VehicleData[]) => {
+        this.loadedVehicles = resData;
+      });
+
+    //this.vehiclesService.fetchVehicles();
+
+    // this.vehicleSub = this.vehiclesService.vehicles.subscribe((vehicles) => {
+    //   console.log(vehicles);
+    //   this.loadedVehicles = vehicles;
     // });
-    this.vehicleSub = this.vehiclesService.vehicles.subscribe((vehicles) => {
-      console.log(vehicles);
-      this.loadedVehicles = vehicles;
-    });
   }
 
   onFilterVehicle(event: CustomEvent<SegmentChangeEventDetail>) {

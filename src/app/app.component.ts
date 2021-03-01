@@ -8,6 +8,7 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  user = JSON.parse(localStorage.getItem('user'));
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogout() {

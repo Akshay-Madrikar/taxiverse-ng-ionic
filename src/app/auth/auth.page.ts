@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { AuthService } from './auth.service';
+import { AuthService, UserData } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -22,7 +22,7 @@ export class AuthPage implements OnInit {
 
   ngOnInit() {}
 
-  authenticate(email: string, password: string) {
+  authenticate(user) {
     this.isLoading = true;
 
     this.loadingCtrl
@@ -33,9 +33,9 @@ export class AuthPage implements OnInit {
       .then((loadingEl) => {
         loadingEl.present();
         if (this.isLogin) {
-          this.authService.login(email, password).subscribe(
-            (resData) => {
-              console.log(resData);
+          this.authService.login(user).subscribe(
+            (userData: UserData) => {
+              this.authService.storeUserData(userData.token, userData.user);
               this.isLoading = false;
               loadingEl.dismiss();
               this.router.navigateByUrl('/vehicles/tabs/discover');
@@ -46,9 +46,9 @@ export class AuthPage implements OnInit {
             }
           );
         } else {
-          this.authService.signup(email, password).subscribe(
-            (resData) => {
-              console.log(resData);
+          this.authService.signup(user).subscribe(
+            (userData: UserData) => {
+              this.authService.storeUserData(userData.token, userData.user);
               this.isLoading = false;
               loadingEl.dismiss();
               this.router.navigateByUrl('/vehicles/tabs/discover');
@@ -70,11 +70,12 @@ export class AuthPage implements OnInit {
     if (!form.valid) {
       return;
     }
+    const user = {
+      email: form.value.email,
+      password: form.value.password,
+    };
 
-    const email = form.value.email;
-    const password = form.value.password;
-    console.log(email, password);
-    this.authenticate(email, password);
+    this.authenticate(user);
     form.reset();
   }
 

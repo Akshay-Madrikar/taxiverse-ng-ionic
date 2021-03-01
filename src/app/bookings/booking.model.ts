@@ -1,3 +1,5 @@
+import { LocationData } from './location.model';
+
 export class Booking {
   constructor(
     public id: string,
@@ -7,6 +9,7 @@ export class Booking {
     public userId: string,
     public partnerCount: number,
     public bookedFrom: Date,
-    public bookedTo: Date
+    public bookedTo: Date,
+    public locationData: LocationData
   ) {}
 }

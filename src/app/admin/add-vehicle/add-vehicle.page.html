@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/vehicles/tabs/discover"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add vehicle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onAddVehicle(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Name</ion-label>
+              <ion-input
+                name="vehicleName"
+                type="text"
+                ngModel
+                required
+                vehicleName
+                #vehicleNameCtrl="ngModel"
+              ></ion-input>
+            </ion-item>
+            <ion-item
+              *ngIf="!vehicleNameCtrl.valid && vehicleNameCtrl.touched"
+              lines="none"
+            >
+              <ion-label>Provide a name</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">ImageUrl</ion-label>
+              <ion-input name="imageUrl" type="text" ngModel></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">FuelType</ion-label>
+              <ion-input name="fuelType" type="text" ngModel></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Price</ion-label>
+              <ion-input
+                name="price"
+                type="number"
+                required
+                ngModel
+                #priceCtrl="ngModel"
+              ></ion-input>
+            </ion-item>
+            <ion-item
+              *ngIf="!priceCtrl.valid && priceCtrl.touched"
+              lines="none"
+            >
+              <ion-label>Provide a price</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Bookable</ion-label>
+              <ion-input name="bookable" type="number" ngModel></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Available From</ion-label>
+              <ion-datetime
+                display-format="MMM DD, YYYY"
+                picker-format="MMM DD, YYYY"
+                [min]="minDate"
+                [max]="maxDate"
+                [ngModel]="availableFrom"
+                name="available-from"
+                required
+                #availableFromCtrl="ngModel"
+              >
+              </ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Available To</ion-label>
+              <ion-datetime
+                display-format="MMM DD, YYYY"
+                picker-format="MMM DD, YYYY"
+                [min]="availableFromCtrl.value"
+                [max]="maxDate"
+                [ngModel]="availableTo"
+                name="available-to"
+                required
+                #availableToCtrl="ngModel"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button color="primary" expand="block" type="submit">
+            Add
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
