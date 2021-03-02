@@ -19,20 +19,20 @@
         size-sm="8"
         offset-sm="2"
         text-center
-        *ngIf="loadedVehicles && loadedVehicles.length"
+        *ngIf="relevantVehicles && relevantVehicles.length"
       >
         <ion-card>
           <ion-card-header>
-            <ion-card-title>{{ loadedVehicles[0].name }}</ion-card-title>
+            <ion-card-title>{{ relevantVehicles[0].name }}</ion-card-title>
             <ion-card-subtitle
-              >&#8377;{{ loadedVehicles[0].price }} / km</ion-card-subtitle
+              >&#8377;{{ relevantVehicles[0].price }} / km</ion-card-subtitle
             >
           </ion-card-header>
-          <ion-img [src]="loadedVehicles[0].imageUrl"></ion-img>
+          <ion-img [src]="relevantVehicles[0].imageUrl"></ion-img>
           <ion-card-content>
             <ion-label color="dark"
               ><p>
-                Type of engine: {{ loadedVehicles[0].fuelType }}
+                Type of engine: {{ relevantVehicles[0].fuelType }}
               </p></ion-label
             >
           </ion-card-content>
@@ -52,7 +52,7 @@
       <ion-col size="12" size-sm="8" offset-sm="2" text-center>
         <ion-list>
           <ion-item
-            *ngFor="let vehicle of loadedVehicles.slice(1); let i =  index"
+            *ngFor="let vehicle of listedLoadedVehicles; let i =  index"
             [routerLink]="['/','vehicles','tabs', 'discover', vehicle._id]"
             detail
             lines="none"
