@@ -30,8 +30,11 @@
           </ion-card-header>
           <ion-img [src]="loadedVehicles[0].imageUrl"></ion-img>
           <ion-card-content>
-            <ion-label>Type of engine: </ion-label>
-            <p>{{ loadedVehicles[0].fuelType }}</p>
+            <ion-label color="dark"
+              ><p>
+                Type of engine: {{ loadedVehicles[0].fuelType }}
+              </p></ion-label
+            >
           </ion-card-content>
           <div class="ion-padding ion-text-right">
             <ion-button
@@ -57,7 +60,7 @@
             <ion-thumbnail slot="start">
               <ion-img [src]="vehicle.imageUrl"></ion-img>
             </ion-thumbnail>
-            <ion-label>
+            <ion-label color="dark">
               <h2>{{ vehicle.name }}</h2>
               <p>Type of engine: {{ vehicle.fuelType }}</p>
             </ion-label>

@@ -7,6 +7,7 @@ import {
   NavController,
 } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AddFuelDateComponent } from 'src/app/admin/add-fuel-date/add-fuel-date.component';
 import { BookingService } from 'src/app/bookings/booking.service';
 import { NewBookingComponent } from 'src/app/bookings/new-booking/new-booking.component';
 import { VehicleData, VehiclesService } from '../../vehicles.service';
@@ -31,6 +32,7 @@ export class VehicleDetailPage implements OnInit, OnDestroy {
     bookable: null,
   };
   private vehicleSub: Subscription;
+  private user = JSON.parse(localStorage.getItem('user'));
 
   constructor(
     private navCtrl: NavController,
@@ -59,7 +61,6 @@ export class VehicleDetailPage implements OnInit, OnDestroy {
   }
 
   onBookVehicle() {
-    //this.navCtrl.navigateBack('/vehicles/tabs/discover');
     this.actionSheetCtrl
       .create({
         header: 'Choose an action',
@@ -78,6 +79,36 @@ export class VehicleDetailPage implements OnInit, OnDestroy {
       })
       .then((actionSheetEl) => {
         actionSheetEl.present();
+      });
+  }
+
+  onAddFuel() {
+    this.modalCtrl
+      .create({
+        component: AddFuelDateComponent,
+        componentProps: { selectedVehicle: this.vehicle },
+      })
+      .then((modalEl) => {
+        modalEl.present();
+        return modalEl.onDidDismiss();
+      })
+      .then((resultData) => {
+        if (resultData.role === 'confirm') {
+          this.loadingCtrl
+            .create({ message: 'Adding fuel date...' })
+            .then((loadingEl) => {
+              loadingEl.present();
+              //const data = resultData.data.bookingData;
+              this.vehicleService
+                .addFuelDate(resultData.data.fuelDateData, this.vehicle._id)
+                .subscribe(() => {
+                  loadingEl.dismiss();
+                  this.router.navigateByUrl(
+                    `/admin/fuel-list/${this.vehicle._id}`
+                  );
+                });
+            });
+        }
       });
   }
 

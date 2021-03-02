@@ -8,6 +8,8 @@ export const environment = {
     accessToken:
       'pk.eyJ1Ijoic2xvd2IweSIsImEiOiJja2xxYmx5djExYjQxMnZxcmV3ZXJ1cWpjIn0.iisFWtqIXNz7jd9efqWHcA',
   },
+  API_URL: 'http://localhost:5000',
+  geonamesId: 'slowb0y',
 };
 
 /*

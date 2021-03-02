@@ -25,19 +25,52 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size-sm="6" offset-sm="3" class="ion-text-left">
+      <ion-col
+        size-sm="6"
+        offset-sm="3"
+        class="ion-text-left"
+        *ngIf="user.role === 0 && vehicle.bookable === 1"
+      >
         <p><b>Available From: </b>{{ vehicle.availableFrom }}</p>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size-sm="6" offset-sm="3" class="ion-text-left">
+      <ion-col
+        size-sm="6"
+        offset-sm="3"
+        class="ion-text-left"
+        *ngIf="user.role === 0 && vehicle.bookable === 1"
+      >
         <p><b>Available To: </b>{{ vehicle.availableTo }}</p>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
-        <ion-button color="primary" class="ion-margin" (click)="onBookVehicle()"
+        <ion-label
+          color="danger"
+          *ngIf="user.role === 0 && vehicle.bookable === 0"
+          >Sorry, this vehicle is not available right now!!!
+        </ion-label>
+        <ion-button
+          color="primary"
+          class="ion-margin"
+          (click)="onBookVehicle()"
+          *ngIf="user.role === 0 && vehicle.bookable === 1"
           >Book</ion-button
+        >
+        <ion-button
+          color="primary"
+          class="ion-margin"
+          (click)="onAddFuel()"
+          *ngIf="user.role === 1"
+          >Add fuel details</ion-button
+        >
+        <ion-button
+          color="primary"
+          class="ion-margin"
+          [routerLink]="['/','admin','fuel-list', vehicle._id]"
+          *ngIf="user.role === 1"
+          >Check fuel list</ion-button
         >
       </ion-col>
     </ion-row>

@@ -21,13 +21,6 @@ export class DiscoverPage implements OnInit, OnDestroy {
       .subscribe((resData: VehicleData[]) => {
         this.loadedVehicles = resData;
       });
-
-    //this.vehiclesService.fetchVehicles();
-
-    // this.vehicleSub = this.vehiclesService.vehicles.subscribe((vehicles) => {
-    //   console.log(vehicles);
-    //   this.loadedVehicles = vehicles;
-    // });
   }
 
   onFilterVehicle(event: CustomEvent<SegmentChangeEventDetail>) {

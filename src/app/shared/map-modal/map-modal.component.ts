@@ -141,8 +141,9 @@ export class MapModalComponent implements OnInit, AfterViewInit {
       req.open('GET', url, true);
       req.onload = () => {
         const jsonResponse = req.response;
-        const distance = jsonResponse.routes[0].distance * 0.001;
-        const duration = jsonResponse.routes[0].duration / 60;
+        const distance =
+          Math.round(jsonResponse.routes[0].distance * 0.001 * 100) / 100;
+        const duration = Math.round(jsonResponse.routes[0].duration / 60);
         const steps = jsonResponse.routes[0].legs[0].steps;
         const coords = jsonResponse.routes[0].geometry;
         //  console.log(steps);
@@ -177,18 +178,21 @@ export class MapModalComponent implements OnInit, AfterViewInit {
         // add the route to the map
         addRoute(coords);
         //  console.log(coordinates);
-        modalCtrl.dismiss({
-          source: {
-            lng: coords.coordinates[0][0],
-            lat: coords.coordinates[0][1],
-          },
-          destination: {
-            lng: coords.coordinates.slice(-1)[0][0],
-            lat: coords.coordinates.slice(-1)[0][1],
-          },
-          distance: distance,
-          duration: duration,
-        });
+        setTimeout(() => {
+          modalCtrl.dismiss({
+            dismissed: false,
+            source: {
+              lng: coords.coordinates[0][0],
+              lat: coords.coordinates[0][1],
+            },
+            destination: {
+              lng: coords.coordinates.slice(-1)[0][0],
+              lat: coords.coordinates.slice(-1)[0][1],
+            },
+            distance: distance,
+            duration: duration,
+          });
+        }, 5000);
       };
       req.send();
     }

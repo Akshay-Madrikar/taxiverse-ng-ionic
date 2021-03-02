@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { take, tap, delay, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 import { AuthService } from '../auth/auth.service';
 
@@ -10,6 +10,19 @@ export interface BookingData {
   vehicleId: string;
   vehicleName: string;
   userId: string;
+  location: {
+    source: {
+      lat: number;
+      lng: number;
+    };
+    destination: {
+      lat: number;
+      lng: number;
+    };
+    duration: number;
+    distance: number;
+  };
+  status: number;
   partnerCount: number;
   bookedFrom: Date;
   bookedTo: Date;
@@ -29,7 +42,7 @@ export class BookingService {
     const vehicleId = bookingData.vehicleId;
     return this.http
       .post(
-        `http://localhost:5000/api/booking/create/${vehicleId}/${this.userId}`,
+        `${environment.API_URL}/api/booking/create/${vehicleId}/${this.userId}`,
         {
           bookingData,
         },
@@ -40,12 +53,12 @@ export class BookingService {
           ),
         }
       )
-      .pipe(map((resData) => resData));
+      .pipe(map((resData: BookingData) => resData));
   }
 
   fetchUserBookings() {
     return this.http
-      .get(`http://localhost:5000/api/booking/list/${this.userId}`, {
+      .get(`${environment.API_URL}/api/booking/list/${this.userId}`, {
         headers: this.headers.append(
           'Authorization',
           `Bearer ${this.authToken}`
@@ -60,12 +73,34 @@ export class BookingService {
 
   fetchAllBookings() {
     return this.http
-      .get(`http://localhost:5000/api/booking/list-all/${this.userId}`, {
+      .get(`${environment.API_URL}/api/booking/list-all/${this.userId}`, {
         headers: this.headers.append(
           'Authorization',
           `Bearer ${this.authToken}`
         ),
       })
+      .pipe(
+        map((resData: BookingData[]) => {
+          return resData;
+        })
+      );
+  }
+
+  getSingleBooking(bookingId: string) {
+    return this.http
+      .get(`${environment.API_URL}/api/booking/${bookingId}`)
+      .pipe(
+        map((resData: BookingData) => {
+          return resData;
+        })
+      );
+  }
+
+  fetchAddress(lat: number, lng: number) {
+    return this.http
+      .get(
+        `http://api.geonames.org/findNearbyPlaceNameJSON?formatted=true&lat=${lat}&lng=${lng}&username=${environment.geonamesId}&style=full`
+      )
       .pipe(
         map((resData) => {
           return resData;
@@ -73,32 +108,34 @@ export class BookingService {
       );
   }
 
-  // const newBooking = new Booking(
-  //   Math.random().toString(),
-  //   vehicleId,
-  //   vehicleName,
-  //   vehicleImage,
-  //   this.authService.userId,
-  //   partnerCount,
-  //   dateFrom,
-  //   dateTo
-  // );
-  // return this.bookings.pipe(
-  //   take(1),
-  //   delay(1000),
-  //   tap((bookings) => {
-  //     this._bookings.next(bookings.concat(newBooking));
-  //   })
-  // );
+  changePaymentStatus(bookingId: string) {
+    return this.http
+      .put(
+        `${environment.API_URL}/api/booking/payment/${this.userId}`,
+        {
+          bookingId,
+        },
+        {
+          headers: this.headers.append(
+            'Authorization',
+            `Bearer ${this.authToken}`
+          ),
+        }
+      )
+      .pipe(map((resData: BookingData) => resData));
+  }
 
   cancelBooking(bookingId: string) {
     return this.http
-      .delete(`http://localhost:5000/api/booking/${bookingId}/${this.userId}`, {
-        headers: this.headers.append(
-          'Authorization',
-          `Bearer ${this.authToken}`
-        ),
-      })
+      .delete(
+        `${environment.API_URL}/api/booking/${bookingId}/${this.userId}`,
+        {
+          headers: this.headers.append(
+            'Authorization',
+            `Bearer ${this.authToken}`
+          ),
+        }
+      )
       .pipe(
         map((resData) => {
           return resData;
@@ -106,20 +143,3 @@ export class BookingService {
       );
   }
 }
-
-// private _bookings: Booking[] = [
-//   {
-//     id: 'xyz',
-//     vehicleId: 'p1',
-//     vehicleName: 'Wagon R',
-//     userId: 'abc',
-//   },
-// ];
-
-// get bookings() {
-//   return [...this._bookings];
-// }
-
-// get bookings() {
-//   return this._bookings.asObservable();
-// }

@@ -58,6 +58,20 @@ const routes: Routes = [
         (m) => m.ManageUsersPageModule
       ),
   },
+  {
+    path: 'admin/fuel-list/:vehicleId',
+    loadChildren: () =>
+      import('./admin/fuel-list/fuel-list.module').then(
+        (m) => m.FuelListPageModule
+      ),
+  },
+  {
+    path: 'admin/update-vehicle/:vehicleId',
+    loadChildren: () =>
+      import('./admin/update-vehicle/update-vehicle.module').then(
+        (m) => m.UpdateVehiclePageModule
+      ),
+  },
 ];
 
 @NgModule({

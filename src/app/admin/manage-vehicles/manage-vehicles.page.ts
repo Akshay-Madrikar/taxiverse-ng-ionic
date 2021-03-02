@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonItemSliding, LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import {
@@ -17,7 +18,8 @@ export class ManageVehiclesPage implements OnInit, OnDestroy {
 
   constructor(
     private vehiclesService: VehiclesService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -28,6 +30,11 @@ export class ManageVehiclesPage implements OnInit, OnDestroy {
       });
   }
 
+  onUpdateVehicle(vehicleId: string, slidingEl: IonItemSliding) {
+    slidingEl.close();
+    this.router.navigateByUrl(`/admin/update-vehicle/${vehicleId}`);
+  }
+
   onRemoveVehicle(vehicleId: string, slidingEl: IonItemSliding) {
     slidingEl.close();
     this.loadingCtrl
@@ -36,7 +43,6 @@ export class ManageVehiclesPage implements OnInit, OnDestroy {
         loadingEl.present();
         this.vehiclesService.onRemoveVehicle(vehicleId).subscribe(() => {
           loadingEl.dismiss();
-          //this.router.navigateByUrl('/vehicles/tabs/discover');
         });
       });
   }

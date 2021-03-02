@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BookingsListPageRoutingModule } from './bookings-list-routing.module';
+import { FuelListPageRoutingModule } from './fuel-list-routing.module';
 
-import { BookingsListPage } from './bookings-list.page';
+import { FuelListPage } from './fuel-list.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    BookingsListPageRoutingModule,
+    FuelListPageRoutingModule
   ],
-  declarations: [BookingsListPage],
+  declarations: [FuelListPage]
 })
-export class BookingsListPageModule {}
+export class FuelListPageModule {}

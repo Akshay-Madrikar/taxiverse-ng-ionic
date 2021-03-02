@@ -1,10 +1,11 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="discover">
-      <ion-label>Discover</ion-label>
+      <ion-label *ngIf="user.role === 0">Discover</ion-label>
+      <ion-label *ngIf="user.role === 1">Vehicles</ion-label>
       <ion-icon name="search"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="bookings">
+    <ion-tab-button tab="bookings" *ngIf="user.role === 0">
       <ion-label>Bookings</ion-label>
       <ion-icon name="car-outline"></ion-icon>
     </ion-tab-button>

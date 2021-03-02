@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export interface UserData {
   token: String;
@@ -59,7 +60,7 @@ export class AuthService {
     this._userIsAuthenticated = true;
     return this.http
       .post(
-        'http://localhost:5000/api/signin',
+        `${environment.API_URL}/api/signin`,
         {
           user,
         },
@@ -77,12 +78,6 @@ export class AuthService {
     this.user = user;
   }
 
-  // loadToken() {
-  //   const token = localStorage.getItem('token');
-  //   this.authToken = token;
-  //   return token;
-  // }
-
   logout() {
     this._userIsAuthenticated = false;
     this.authToken = null;
@@ -94,7 +89,7 @@ export class AuthService {
     this._userIsAuthenticated = true;
     return this.http
       .post(
-        'http://localhost:5000/api/signup',
+        `${environment.API_URL}/api/signup`,
         {
           user,
         },

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { Vehicle } from './vehicle.model';
 
@@ -11,12 +12,12 @@ export interface VehicleData {
   imageUrl: string;
   fuelType: string;
   price: number;
-  fuelChecklist?: string[];
+  fuelChecklist?: [];
   availableFrom: Date;
   availableTo: Date;
   updatedAt: string;
   createdAt: string;
-  bookable?: number;
+  bookable: number;
 }
 
 @Injectable({
@@ -80,16 +81,18 @@ export class VehiclesService {
   }
 
   getSingleVehicle(vehicleId: string) {
-    return this.http.get(`http://localhost:5000/api/vehicle/${vehicleId}`).pipe(
-      map((resData: VehicleData) => {
-        return resData;
-      })
-    );
+    return this.http
+      .get(`${environment.API_URL}/api/vehicle/${vehicleId}`)
+      .pipe(
+        map((resData: VehicleData) => {
+          return resData;
+        })
+      );
   }
 
   fetchVehicles() {
-    return this.http.get(`http://localhost:5000/api/vehicles/all`).pipe(
-      map((resData) => {
+    return this.http.get(`${environment.API_URL}/api/vehicles/all`).pipe(
+      map((resData: VehicleData[]) => {
         return resData;
       })
     );
@@ -98,9 +101,43 @@ export class VehiclesService {
   addVehicle(vehicleData) {
     return this.http
       .post(
-        `http://localhost:5000/api/vehicle/create/${this.userId}`,
+        `${environment.API_URL}/api/vehicle/create/${this.userId}`,
         {
           vehicleData,
+        },
+        {
+          headers: this.headers.append(
+            'Authorization',
+            `Bearer ${this.authToken}`
+          ),
+        }
+      )
+      .pipe(map((resData: VehicleData) => resData));
+  }
+
+  updateVehicle(vehicleData, vehicleId) {
+    return this.http
+      .put(
+        `${environment.API_URL}/api/vehicle/${vehicleId}/${this.userId}`,
+        {
+          vehicleData,
+        },
+        {
+          headers: this.headers.append(
+            'Authorization',
+            `Bearer ${this.authToken}`
+          ),
+        }
+      )
+      .pipe(map((resData: VehicleData) => resData));
+  }
+
+  addFuelDate(fuelDateData: any, vehicleId: string) {
+    return this.http
+      .post(
+        `${environment.API_URL}/api/vehicle/${vehicleId}/add-fuel/${this.userId}`,
+        {
+          fuelDateData,
         },
         {
           headers: this.headers.append(
@@ -114,12 +151,15 @@ export class VehiclesService {
 
   onRemoveVehicle(vehicleId: string) {
     return this.http
-      .delete(`http://localhost:5000/api/vehicle/${vehicleId}/${this.userId}`, {
-        headers: this.headers.append(
-          'Authorization',
-          `Bearer ${this.authToken}`
-        ),
-      })
+      .delete(
+        `${environment.API_URL}/api/vehicle/${vehicleId}/${this.userId}`,
+        {
+          headers: this.headers.append(
+            'Authorization',
+            `Bearer ${this.authToken}`
+          ),
+        }
+      )
       .pipe(
         map((resData) => {
           return resData;

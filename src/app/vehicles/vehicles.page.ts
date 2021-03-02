@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicles.page.scss'],
 })
 export class VehiclesPage implements OnInit {
+  private user = JSON.parse(localStorage.getItem('user'));
   constructor() {}
 
   ngOnInit() {}

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 export interface UserData {
   _id: string;
@@ -21,7 +22,7 @@ export class UserService {
 
   fetchUsers() {
     return this.http
-      .get(`http://localhost:5000/api/users/all/${this.userId}`, {
+      .get(`${environment.API_URL}/api/users/all/${this.userId}`, {
         headers: this.headers.append(
           'Authorization',
           `Bearer ${this.authToken}`
@@ -32,5 +33,39 @@ export class UserService {
           return resData;
         })
       );
+  }
+
+  blockUser(userId: string, adminId: string) {
+    return this.http
+      .put(
+        `${environment.API_URL}/api/block/user/${userId}/${adminId}`,
+        {
+          userId,
+        },
+        {
+          headers: this.headers.append(
+            'Authorization',
+            `Bearer ${this.authToken}`
+          ),
+        }
+      )
+      .pipe(map((resData: UserData) => resData));
+  }
+
+  UnblockUser(userId: string, adminId: string) {
+    return this.http
+      .put(
+        `${environment.API_URL}/api/unblock/user/${userId}/${adminId}`,
+        {
+          userId,
+        },
+        {
+          headers: this.headers.append(
+            'Authorization',
+            `Bearer ${this.authToken}`
+          ),
+        }
+      )
+      .pipe(map((resData: UserData) => resData));
   }
 }
