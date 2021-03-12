@@ -29,6 +29,7 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () =>
       import('./about/about.module').then((m) => m.AboutPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'admin/add-vehicle',
@@ -36,6 +37,7 @@ const routes: Routes = [
       import('./admin/add-vehicle/add-vehicle.module').then(
         (m) => m.AddVehiclePageModule
       ),
+    canLoad: [AuthGuard],
   },
   {
     path: 'admin/manage-vehicles',
@@ -43,6 +45,7 @@ const routes: Routes = [
       import('./admin/manage-vehicles/manage-vehicles.module').then(
         (m) => m.ManageVehiclesPageModule
       ),
+    canLoad: [AuthGuard],
   },
   {
     path: 'admin/bookings-list',
@@ -50,6 +53,7 @@ const routes: Routes = [
       import('./admin/bookings-list/bookings-list.module').then(
         (m) => m.BookingsListPageModule
       ),
+    canLoad: [AuthGuard],
   },
   {
     path: 'admin/manage-users',
@@ -57,6 +61,7 @@ const routes: Routes = [
       import('./admin/manage-users/manage-users.module').then(
         (m) => m.ManageUsersPageModule
       ),
+    canLoad: [AuthGuard],
   },
   {
     path: 'admin/fuel-list/:vehicleId',
@@ -64,6 +69,7 @@ const routes: Routes = [
       import('./admin/fuel-list/fuel-list.module').then(
         (m) => m.FuelListPageModule
       ),
+    canLoad: [AuthGuard],
   },
   {
     path: 'admin/update-vehicle/:vehicleId',
@@ -71,6 +77,7 @@ const routes: Routes = [
       import('./admin/update-vehicle/update-vehicle.module').then(
         (m) => m.UpdateVehiclePageModule
       ),
+    canLoad: [AuthGuard],
   },
 ];
 
